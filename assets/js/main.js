@@ -668,3 +668,4 @@ document.addEventListener('DOMContentLoaded', async function() {
         document.getElementById('progress-bar').textContent = '0%';
     });
 });
+
