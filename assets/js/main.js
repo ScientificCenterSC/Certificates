@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     // 4. Top Badges and Info
                     // Logo on Top Left
                     if (ministryLogoImg) {
-                        let s = scaleImage(ministryLogoImg, 350, 350);
+                        let s = scaleImage(ministryLogoImg, 550, 550); // Increased size
                         ctx.drawImage(ministryLogoImg, 150, 150, s.w, s.h);
                     }
 
@@ -419,8 +419,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                     ctx.textAlign = "left"; 
 
                     // 5. Title
-                    let curr_y = 450; // moved up
-                    curr_y = drawCenteredText(ctx, "Certificate of Completion", curr_y, '180px "Cinzel"', "#8B1E24") + 40;
+                    let curr_y = 480; 
+                    curr_y = drawCenteredText(ctx, "CERTIFICATE", curr_y, '180px "Cinzel"', "#8B1E24") + 20;
+                    curr_y = drawCenteredText(ctx, "OF", curr_y, '100px "Cinzel"', "#8B1E24") + 20;
+                    curr_y = drawCenteredText(ctx, "COMPLETION", curr_y, '180px "Cinzel"', "#8B1E24") + 50;
                     
                     let gradLine = ctx.createLinearGradient(CANVAS_WIDTH/2 - 500, 0, CANVAS_WIDTH/2 + 500, 0);
                     gradLine.addColorStop(0, "rgba(139, 30, 36, 0)");
@@ -428,7 +430,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     gradLine.addColorStop(1, "rgba(139, 30, 36, 0)");
                     ctx.fillStyle = gradLine;
                     ctx.fillRect(CANVAS_WIDTH/2 - 500, curr_y, 1000, 3);
-                    curr_y += 70;
+                    curr_y += 80;
 
                     // 6. Recipient
                     ctx.font = '65px "Tinos"';
