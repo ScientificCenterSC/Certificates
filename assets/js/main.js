@@ -264,6 +264,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const endDate = document.getElementById('end_date') ? document.getElementById('end_date').value : '';
         const grade = document.getElementById('grade') ? document.getElementById('grade').value : '';
         const certificateId = document.getElementById('certificate_id') ? document.getElementById('certificate_id').value.trim() : '';
+        const studentTitle = document.getElementById('student_title') ? document.getElementById('student_title').value : 'Mr./Ms. ';
         
         if (!courseName) { showToast('الرجاء كتابة اسم الدورة', 'danger'); return; }
 
@@ -421,8 +422,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     // 5. Title
                     let curr_y = 480; 
                     curr_y = drawCenteredText(ctx, "CERTIFICATE", curr_y, '180px "Cinzel"', "#8B1E24") + 20;
-                    curr_y = drawCenteredText(ctx, "OF", curr_y, '100px "Cinzel"', "#8B1E24") + 20;
-                    curr_y = drawCenteredText(ctx, "COMPLETION", curr_y, '180px "Cinzel"', "#8B1E24") + 50;
+                    curr_y = drawCenteredText(ctx, "OF", curr_y, '70px "Cinzel"', "#8B1E24") + 10;
+                    curr_y = drawCenteredText(ctx, "COMPLETION", curr_y, '130px "Cinzel"', "#8B1E24") + 50;
                     
                     let gradLine = ctx.createLinearGradient(CANVAS_WIDTH/2 - 500, 0, CANVAS_WIDTH/2 + 500, 0);
                     gradLine.addColorStop(0, "rgba(139, 30, 36, 0)");
@@ -434,7 +435,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
                     // 6. Recipient
                     ctx.font = '65px "Tinos"';
-                    let nameTitleW = ctx.measureText("Mr./Ms. ").width;
+                    let nameTitleW = ctx.measureText(studentTitle).width;
                     ctx.font = 'bold 90px "Tinos"';
                     let nameW = ctx.measureText(studentName).width;
                     let totalNameW = nameTitleW + nameW;
@@ -442,7 +443,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     
                     ctx.font = '65px "Tinos"';
                     ctx.fillStyle = "#1F355E";
-                    ctx.fillText("Mr./Ms. ", startNameX, curr_y);
+                    ctx.fillText(studentTitle, startNameX, curr_y);
                     ctx.font = 'bold 90px "Tinos"';
                     ctx.fillStyle = "#8B1E24";
                     ctx.fillText(studentName, startNameX + nameTitleW, curr_y);
@@ -457,18 +458,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                     curr_y = drawWrappedText(ctx, appreciationText, curr_y, 'italic 55px "Tinos"', "#1F355E", CANVAS_WIDTH - 600, CANVAS_WIDTH, 1.4) + 60;
 
                     // 9. Duration & Grade
-                    curr_y = drawCenteredText(ctx, `Duration: ${startDate} to ${endDate}   |   Final Grade: ${grade}%`, curr_y, 'bold 50px "Tinos"', "#8B1E24") + 150;
+                    curr_y = drawCenteredText(ctx, `Duration: ${startDate} to ${endDate}   |   Final Grade: ${grade}%`, curr_y, 'bold 50px "Tinos"', "#8B1E24") + 40;
 
                     // 10. Certificate ID
-                    ctx.save();
-                    ctx.translate(CANVAS_WIDTH - 80, CANVAS_HEIGHT / 2 + 300);
-                    ctx.rotate(-Math.PI / 2);
-                    ctx.textAlign = "center";
-                    ctx.font = '45px "Outfit", sans-serif';
-                    ctx.fillStyle = "#1F355E";
-                    ctx.fillText(`ID No.: ${certificateId}`, 0, 0);
-                    ctx.restore();
-                    ctx.textAlign = "left";
+                    curr_y = drawCenteredText(ctx, `ID No.: ${certificateId}`, curr_y, '45px "Outfit", sans-serif', "#1F355E") + 150;
 
                     // 11. Signatures
                     let sigY = CANVAS_HEIGHT - 320;
