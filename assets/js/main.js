@@ -392,18 +392,20 @@ document.addEventListener('DOMContentLoaded', async function() {
                     
                     // 3. Watermark
                     if (ministryLogoImg) {
-                        ctx.globalAlpha = 0.12;
-                        let s = scaleImage(ministryLogoImg, 1200, 1200);
-                        ctx.drawImage(ministryLogoImg, (CANVAS_WIDTH - s.w) / 2, (CANVAS_HEIGHT - s.h) / 2, s.w, s.h);
+                        ctx.globalAlpha = 0.08;
+                        let s = scaleImage(ministryLogoImg, 1400, 1400);
+                        ctx.drawImage(ministryLogoImg, (CANVAS_WIDTH - s.w) / 2, (CANVAS_HEIGHT - s.h) / 2 + 50, s.w, s.h);
                         ctx.globalAlpha = 1.0;
                     }
 
                     // 4. Top Badges and Info
-                    if (depImg) {
-                        let s = scaleImage(depImg, 450, 450);
-                        ctx.drawImage(depImg, 150, 150, s.w, s.h);
+                    // Logo on Top Left
+                    if (ministryLogoImg) {
+                        let s = scaleImage(ministryLogoImg, 350, 350);
+                        ctx.drawImage(ministryLogoImg, 150, 150, s.w, s.h);
                     }
 
+                    // Institution Info on Top Right
                     let instInfoY = 180;
                     ctx.textAlign = "right";
                     ctx.textBaseline = "top";
@@ -416,54 +418,58 @@ document.addEventListener('DOMContentLoaded', async function() {
                     ctx.fillText("Scientific Center", CANVAS_WIDTH - 150, instInfoY + 160);
                     ctx.textAlign = "left"; 
 
-                    if (ministryLogoImg) {
-                        let s = scaleImage(ministryLogoImg, 350, 350);
-                        ctx.drawImage(ministryLogoImg, (CANVAS_WIDTH - s.w) / 2, 130, s.w, s.h);
-                    }
-
                     // 5. Title
-                    let curr_y = 550;
-                    curr_y = drawCenteredText(ctx, "Certificate", curr_y, '200px "Cinzel"', "#8B1E24") + 80;
+                    let curr_y = 450; // moved up
+                    curr_y = drawCenteredText(ctx, "Certificate of Completion", curr_y, '180px "Cinzel"', "#8B1E24") + 40;
                     
+                    let gradLine = ctx.createLinearGradient(CANVAS_WIDTH/2 - 500, 0, CANVAS_WIDTH/2 + 500, 0);
+                    gradLine.addColorStop(0, "rgba(139, 30, 36, 0)");
+                    gradLine.addColorStop(0.5, "#8B1E24");
+                    gradLine.addColorStop(1, "rgba(139, 30, 36, 0)");
+                    ctx.fillStyle = gradLine;
+                    ctx.fillRect(CANVAS_WIDTH/2 - 500, curr_y, 1000, 3);
+                    curr_y += 70;
+
                     // 6. Recipient
-                    ctx.font = '70px "Tinos"';
+                    ctx.font = '65px "Tinos"';
                     let nameTitleW = ctx.measureText("Mr./Ms. ").width;
                     ctx.font = 'bold 90px "Tinos"';
                     let nameW = ctx.measureText(studentName).width;
                     let totalNameW = nameTitleW + nameW;
                     let startNameX = (CANVAS_WIDTH - totalNameW) / 2;
                     
-                    ctx.font = '70px "Tinos"';
+                    ctx.font = '65px "Tinos"';
                     ctx.fillStyle = "#1F355E";
                     ctx.fillText("Mr./Ms. ", startNameX, curr_y);
                     ctx.font = 'bold 90px "Tinos"';
                     ctx.fillStyle = "#8B1E24";
                     ctx.fillText(studentName, startNameX + nameTitleW, curr_y);
-                    curr_y += 160;
+                    curr_y += 130;
 
                     // 7. Course Section
-                    curr_y = drawCenteredText(ctx, `Successfully completed ${courseName}`, curr_y, '60px "Tinos"', "#8B1E24") + 30;
-                    curr_y = drawCenteredText(ctx, `(${subjectName})`, curr_y, 'bold 70px "Tinos"', "#8B1E24") + 120;
+                    curr_y = drawCenteredText(ctx, `Successfully completed ${courseName}`, curr_y, '55px "Tinos"', "#1F355E") + 20;
+                    curr_y = drawCenteredText(ctx, `${subjectName}`, curr_y, 'bold 75px "Tinos"', "#8B1E24") + 80;
 
-                    // 8. Duration
-                    curr_y = drawCenteredText(ctx, `From: ${startDate}    To: ${endDate}`, curr_y, '50px "Tinos"', "#1F355E") + 120;
+                    // 8. Appreciation Paragraph
+                    let appreciationText = "This certificate is proudly presented in recognition of the successful completion of the training program. We sincerely appreciate your dedication, perseverance, and commitment throughout the course. Congratulations on this achievement, and we wish you continued success and excellence in your future endeavors.";
+                    curr_y = drawWrappedText(ctx, appreciationText, curr_y, 'italic 55px "Tinos"', "#1F355E", CANVAS_WIDTH - 600, CANVAS_WIDTH, 1.4) + 60;
 
-                    // 9. Achievement
-                    curr_y = drawCenteredText(ctx, `Successfully passed the final assessment and obtained a grade of ${grade}%`, curr_y, '55px "Tinos"', "#1F355E") + 180;
+                    // 9. Duration & Grade
+                    curr_y = drawCenteredText(ctx, `Duration: ${startDate} to ${endDate}   |   Final Grade: ${grade}%`, curr_y, 'bold 50px "Tinos"', "#8B1E24") + 150;
 
                     // 10. Certificate ID
                     ctx.save();
                     ctx.translate(CANVAS_WIDTH - 80, CANVAS_HEIGHT / 2 + 300);
                     ctx.rotate(-Math.PI / 2);
                     ctx.textAlign = "center";
-                    ctx.font = '50px "Outfit", sans-serif';
+                    ctx.font = '45px "Outfit", sans-serif';
                     ctx.fillStyle = "#1F355E";
                     ctx.fillText(`ID No.: ${certificateId}`, 0, 0);
                     ctx.restore();
                     ctx.textAlign = "left";
 
                     // 11. Signatures
-                    let sigY = CANVAS_HEIGHT - 380;
+                    let sigY = CANVAS_HEIGHT - 320;
                     ctx.strokeStyle = "#1F355E";
                     ctx.lineWidth = 2;
                     
@@ -478,12 +484,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     let genX = CANVAS_WIDTH - 600;
                     ctx.beginPath(); ctx.moveTo(genX - 300, sigY); ctx.lineTo(genX + 300, sigY); ctx.stroke();
                     drawCenteredUnderLine(ctx, "General Director", genX - 300, 600, sigY + 20, '50px "Tinos"', "#1F355E");
-
-                    // 12. Stamp Area
-                    if (ceoLogoImg) {
-                        let s = scaleImage(ceoLogoImg, 450, 450);
-                        ctx.drawImage(ceoLogoImg, 200, CANVAS_HEIGHT - 500, s.w, s.h);
-                    }
                 } else {
                     // 1. Background Image
                     if (bacImg) {
