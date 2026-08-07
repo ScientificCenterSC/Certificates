@@ -1,0 +1,351 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Great+Vibes&family=Tinos:wght@400;700&display=swap');
+
+:root {
+    --color-navy: #0a1931;
+    --color-dark-green: #145028;
+    --color-white: #ffffff;
+    --color-bg-light: #f4f7f6;
+    --color-glass-bg: rgba(255, 255, 255, 0.85);
+    --color-glass-border: rgba(255, 255, 255, 0.4);
+    --color-glass-shadow: rgba(10, 25, 49, 0.1);
+    
+    --color-primary-theme: var(--color-navy);
+    --color-secondary-theme: var(--color-dark-green);
+    
+    --font-primary: 'Outfit', sans-serif;
+    --font-secondary: 'Inter', sans-serif;
+}
+
+/* Dark Theme Variables */
+.theme-dark {
+    --color-bg-light: #0f172a;
+    --color-glass-bg: rgba(15, 23, 42, 0.8);
+    --color-glass-border: rgba(255, 255, 255, 0.1);
+    --color-glass-shadow: rgba(0, 0, 0, 0.3);
+    --color-white: #e2e8f0;
+    --color-primary-theme: #38bdf8;
+    --color-secondary-theme: #4ade80;
+}
+
+body {
+    background-color: var(--color-bg-light);
+    color: var(--color-navy);
+    font-family: var(--font-secondary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    min-height: 100vh;
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(20, 80, 40, 0.1) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(10, 25, 49, 0.1) 0px, transparent 50%);
+    background-attachment: fixed;
+}
+
+.theme-dark body {
+    color: var(--color-white);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-primary);
+}
+
+/* Theme Toggle */
+.theme-switch-wrapper {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.theme-switch {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+}
+
+.theme-switch input {
+    display: none;
+}
+
+.slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+input:checked + .slider {
+    background-color: var(--color-navy);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.sun-icon { color: #f39c12; font-size: 14px; }
+.moon-icon { color: #f1c40f; font-size: 14px; }
+
+/* Utilities */
+.text-gradient {
+    background: linear-gradient(135deg, var(--color-navy), var(--color-dark-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.theme-dark .text-gradient {
+    background: linear-gradient(135deg, var(--color-primary-theme), var(--color-secondary-theme));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-primary-theme { color: var(--color-primary-theme) !important; }
+.btn-primary-theme {
+    background: linear-gradient(135deg, var(--color-navy), var(--color-dark-green));
+    color: white;
+    border: none;
+    font-family: var(--font-primary);
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(10, 25, 49, 0.3);
+}
+
+.btn-primary-theme:hover {
+    background: linear-gradient(135deg, var(--color-dark-green), var(--color-navy));
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(10, 25, 49, 0.4);
+}
+
+.btn-outline-primary-theme {
+    border: 2px solid var(--color-primary-theme);
+    color: var(--color-primary-theme);
+    background: transparent;
+    font-weight: 600;
+}
+.btn-outline-primary-theme:hover {
+    background: var(--color-primary-theme);
+    color: white;
+}
+
+.theme-dark .btn-primary-theme {
+    background: linear-gradient(135deg, var(--color-primary-theme), var(--color-secondary-theme));
+    color: #0f172a;
+}
+.theme-dark .btn-primary-theme:hover {
+    background: linear-gradient(135deg, var(--color-secondary-theme), var(--color-primary-theme));
+}
+
+/* Glassmorphism */
+.glass-card {
+    background: var(--color-glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--color-glass-border);
+    box-shadow: 0 8px 32px 0 var(--color-glass-shadow);
+}
+.hr-glass {
+    border-color: var(--color-glass-border);
+}
+
+/* Upload Zones */
+.upload-zone {
+    border: 2px dashed rgba(10, 25, 49, 0.3);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255, 0.5);
+    cursor: pointer;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.theme-dark .upload-zone {
+    border-color: rgba(255,255,255, 0.2);
+    background: rgba(15, 23, 42, 0.5);
+}
+
+.upload-zone:hover {
+    border-color: var(--color-primary-theme);
+    background: rgba(20, 80, 40, 0.05);
+    transform: translateY(-2px);
+}
+
+.upload-zone.dragover {
+    background: rgba(20, 80, 40, 0.1);
+    border-color: var(--color-secondary-theme);
+    border-style: solid;
+}
+
+.file-input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.small-zone {
+    padding: 1.5rem 1rem;
+}
+
+/* Custom Radio & Settings */
+.settings-card {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(10, 25, 49, 0.1);
+}
+.theme-dark .settings-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.custom-radio .form-check-input {
+    display: none;
+}
+
+.template-option {
+    padding: 15px 20px;
+    border: 2px solid rgba(10, 25, 49, 0.1);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--color-white);
+}
+
+.theme-dark .template-option {
+    background: rgba(15, 23, 42, 0.8);
+    border-color: rgba(255,255,255, 0.1);
+}
+
+.custom-radio .form-check-input:checked + label .template-option {
+    border-color: var(--color-primary-theme);
+    background: rgba(10, 25, 49, 0.05);
+    box-shadow: 0 4px 10px rgba(10, 25, 49, 0.1);
+}
+.theme-dark .custom-radio .form-check-input:checked + label .template-option {
+    background: rgba(56, 189, 248, 0.1);
+}
+
+.custom-input {
+    border-radius: 10px;
+    padding: 12px 15px;
+    border: 1px solid rgba(10, 25, 49, 0.2);
+    background: rgba(255,255,255, 0.9);
+}
+.custom-input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(10, 25, 49, 0.1);
+    border-color: var(--color-primary-theme);
+}
+.theme-dark .custom-input,
+.theme-dark .form-select {
+    background: rgba(15, 23, 42, 0.8);
+    border-color: rgba(255,255,255, 0.2);
+    color: white;
+}
+.theme-dark select option {
+    background-color: #0f172a;
+    color: white;
+}
+.theme-dark .form-label {
+    color: var(--color-white);
+}
+
+/* Animations */
+.slide-up {
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animated-btn {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+.animated-btn::after {
+    content: "";
+    background: rgba(255, 255, 255, 0.2);
+    display: block;
+    position: absolute;
+    border-radius: 50%;
+    padding-top: 120%;
+    padding-left: 120%;
+    margin-top: -60%;
+    margin-left: -60%;
+    opacity: 0;
+    transition: all 1s;
+    active: 0;
+}
+.animated-btn:active::after {
+    padding-top: 0;
+    padding-left: 0;
+    margin-top: 0;
+    margin-left: 0;
+    opacity: 1;
+    transition: 0s;
+}
+
+/* Progress Bar */
+.custom-progress {
+    border-radius: 12.5px;
+    background-color: rgba(10, 25, 49, 0.1);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+.theme-dark .custom-progress {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Result Stats */
+.stats-container {
+    background: rgba(255,255,255, 0.6);
+    border: 1px solid rgba(10, 25, 49, 0.05);
+}
+.theme-dark .stats-container {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255,255,255, 0.05);
+}
+.stat-item h4 {
+    font-weight: 800;
+    margin-top: 10px;
+    color: var(--color-navy);
+}
+.theme-dark .stat-item h4 {
+    color: var(--color-white);
+}
