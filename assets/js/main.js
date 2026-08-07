@@ -407,17 +407,40 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
 
                     // Institution Info on Top Right
-                    let instInfoY = 180;
-                    ctx.textAlign = "right";
+                    let instInfoY = 150;
+                    let instInfoX = CANVAS_WIDTH - 650;
+                    ctx.textAlign = "center";
                     ctx.textBaseline = "top";
-                    ctx.font = '60px "Outfit", sans-serif';
-                    ctx.fillStyle = "#000000";
-                    ctx.fillText("Ministry of Education", CANVAS_WIDTH - 150, instInfoY);
+                    
+                    // 1. Ministry of Education
+                    ctx.font = 'bold 45px Arial, sans-serif';
+                    ctx.fillStyle = "#1F355E"; 
+                    ctx.fillText("Ministry of Education", instInfoX, instInfoY);
+                    
+                    // 2. Directorate...
+                    ctx.fillText("Directorate of Education in Beni Suef", instInfoX, instInfoY + 60);
+                    
+                    // 3. Private Education
                     ctx.fillStyle = "#8B1E24"; 
-                    ctx.fillText("Private Education Directorate", CANVAS_WIDTH - 150, instInfoY + 80);
-                    ctx.fillStyle = "#000000";
-                    ctx.fillText("Scientific Center", CANVAS_WIDTH - 150, instInfoY + 160);
-                    ctx.textAlign = "left"; 
+                    ctx.fillText("Private Education", instInfoX, instInfoY + 120);
+                    
+                    // Separator Line
+                    ctx.strokeStyle = "#000000";
+                    ctx.lineWidth = 4;
+                    ctx.beginPath();
+                    ctx.moveTo(instInfoX - 300, instInfoY + 190);
+                    ctx.lineTo(instInfoX + 300, instInfoY + 190);
+                    ctx.stroke();
+                    
+                    // 4. Scientific Center...
+                    ctx.fillStyle = "#1F355E"; 
+                    ctx.fillText("Scientific Center for Computer & Languages", instInfoX, instInfoY + 220);
+                    
+                    // 5. Approved by...
+                    ctx.fillStyle = "#8B1E24"; 
+                    ctx.fillText("Approved by Ministry of Education", instInfoX, instInfoY + 280);
+                    
+                    ctx.textAlign = "left";
 
                     // 5. Title
                     let curr_y = 480; 
