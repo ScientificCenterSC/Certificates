@@ -393,7 +393,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     
                     // 3. Watermark
                     if (ministryLogoImg) {
-                        ctx.globalAlpha = 0.08;
+                        ctx.globalAlpha = 0.20; // Increased opacity
                         let s = scaleImage(ministryLogoImg, 1400, 1400);
                         ctx.drawImage(ministryLogoImg, (CANVAS_WIDTH - s.w) / 2, (CANVAS_HEIGHT - s.h) / 2 + 50, s.w, s.h);
                         ctx.globalAlpha = 1.0;
@@ -668,4 +668,3 @@ document.addEventListener('DOMContentLoaded', async function() {
         document.getElementById('progress-bar').textContent = '0%';
     });
 });
-
