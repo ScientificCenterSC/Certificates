@@ -296,7 +296,17 @@ document.addEventListener('DOMContentLoaded', async function() {
                 
                 df.forEach(row => {
                     let n = (row[nameKey] || "").toString().trim();
-                    if (n && n.toLowerCase() !== 'nan') studentsList.push({ name: n });
+                    if (n && n.toLowerCase() !== 'nan') {
+                        studentsList.push({
+                            name: n,
+                            title: row["اللقب"] || row["Title"] || row["Student Title"] || "",
+                            subject: row["المادة"] || row["Subject"] || row["Course"] || "",
+                            startDate: row["تاريخ البدء"] || row["Start Date"] || "",
+                            endDate: row["تاريخ الانتهاء"] || row["End Date"] || "",
+                            grade: row["الدرجة"] || row["Grade"] || "",
+                            certificateId: row["رقم الشهادة"] || row["Certificate ID"] || row["ID No"] || ""
+                        });
+                    }
                 });
             } catch (err) {
                 showToast(`خطأ في قراءة الإكسيل: ${err.message}`, 'danger');
@@ -366,8 +376,16 @@ document.addEventListener('DOMContentLoaded', async function() {
             const delay = ms => new Promise(res => setTimeout(res, ms));
 
             for (let i = 0; i < totalStudents; i++) {
-                let studentName = studentsList[i].name;
+                let studentData = studentsList[i];
+                let studentName = studentData.name;
                 studentName = studentName.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+
+                let currentSubject = studentData.subject || subjectName;
+                let currentStartDate = studentData.startDate || startDate;
+                let currentEndDate = studentData.endDate || endDate;
+                let currentGrade = studentData.grade || grade;
+                let currentCertificateId = studentData.certificateId || certificateId;
+                let currentStudentTitle = studentData.title || studentTitle;
 
                 let percent = Math.round(((i + 1) / totalStudents) * 100);
                 progressBar.style.width = `${percent}%`;
@@ -458,7 +476,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
                     // 6. Recipient
                     ctx.font = '65px "Tinos"';
-                    let nameTitleW = ctx.measureText(studentTitle).width;
+                    let nameTitleW = ctx.measureText(currentStudentTitle).width;
                     ctx.font = 'bold 90px "Tinos"';
                     let nameW = ctx.measureText(studentName).width;
                     let totalNameW = nameTitleW + nameW;
@@ -466,7 +484,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     
                     ctx.font = '65px "Tinos"';
                     ctx.fillStyle = "#1F355E";
-                    ctx.fillText(studentTitle, startNameX, curr_y);
+                    ctx.fillText(currentStudentTitle, startNameX, curr_y);
                     ctx.font = 'bold 90px "Tinos"';
                     ctx.fillStyle = "#8B1E24";
                     ctx.fillText(studentName, startNameX + nameTitleW, curr_y);
@@ -474,17 +492,17 @@ document.addEventListener('DOMContentLoaded', async function() {
 
                     // 7. Course Section
                     curr_y = drawCenteredText(ctx, `Successfully completed ${courseName}`, curr_y, '55px "Tinos"', "#1F355E") + 20;
-                    curr_y = drawCenteredText(ctx, `${subjectName}`, curr_y, 'bold 75px "Tinos"', "#8B1E24") + 80;
+                    curr_y = drawCenteredText(ctx, `${currentSubject}`, curr_y, 'bold 75px "Tinos"', "#8B1E24") + 80;
 
                     // 8. Appreciation Paragraph
                     let appreciationText = "This certificate is proudly presented in recognition of the successful completion of the training program. We sincerely appreciate your dedication, perseverance, and commitment throughout the course. Congratulations on this achievement, and we wish you continued success and excellence in your future endeavors.";
                     curr_y = drawWrappedText(ctx, appreciationText, curr_y, 'italic 55px "Tinos"', "#1F355E", CANVAS_WIDTH - 600, CANVAS_WIDTH, 1.4) + 60;
 
                     // 9. Duration & Grade
-                    curr_y = drawCenteredText(ctx, `Duration: ${startDate} to ${endDate}   |   Final Grade: ${grade}%`, curr_y, 'bold 50px "Tinos"', "#8B1E24") + 40;
+                    curr_y = drawCenteredText(ctx, `Duration: ${currentStartDate} to ${currentEndDate}   |   Final Grade: ${currentGrade}%`, curr_y, 'bold 50px "Tinos"', "#8B1E24") + 40;
 
                     // 10. Certificate ID
-                    curr_y = drawCenteredText(ctx, `ID No.: ${certificateId}`, curr_y, '45px "Outfit", sans-serif', "#1F355E") + 150;
+                    curr_y = drawCenteredText(ctx, `ID No.: ${currentCertificateId}`, curr_y, '45px "Outfit", sans-serif', "#1F355E") + 150;
 
                     // 11. Signatures
                     let sigY = CANVAS_HEIGHT - 320;
