@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     const data = new Uint8Array(e.target.result);
                     const workbook = XLSX.read(data, {type: 'array'});
                     const firstSheet = workbook.SheetNames[0];
-                    const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[firstSheet], {defval: ""});
+                    const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[firstSheet], {defval: "", raw: false});
                     resolve(jsonData);
                 } catch (err) { reject(err); }
             };
