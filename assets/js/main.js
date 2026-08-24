@@ -170,15 +170,25 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
     }
 
+    function formatExcelDate(serial) {
+        if (!serial) return "";
+        if (typeof serial === "number" || (typeof serial === "string" && !isNaN(Number(serial)) && Number(serial) > 40000)) {
+            let num = Number(serial);
+            let date = new Date(Math.round((num - 25569) * 86400 * 1000));
+            return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+        }
+        return serial.toString();
+    }
+
     function readExcel(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = (e) => {
                 try {
                     const data = new Uint8Array(e.target.result);
-                    const workbook = XLSX.read(data, {type: 'array'});
+                    const workbook = XLSX.read(data, {type: 'array', cellDates: false});
                     const firstSheet = workbook.SheetNames[0];
-                    const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[firstSheet], {defval: "", raw: false});
+                    const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[firstSheet], {defval: ""});
                     resolve(jsonData);
                 } catch (err) { reject(err); }
             };
@@ -301,8 +311,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                             name: n,
                             title: row["اللقب"] || row["Title"] || row["Student Title"] || "",
                             subject: row["المادة"] || row["Subject"] || row["Course"] || "",
-                            startDate: row["تاريخ البدء"] || row["Start Date"] || "",
-                            endDate: row["تاريخ الانتهاء"] || row["End Date"] || "",
+                            startDate: formatExcelDate(row["تاريخ البدء"] || row["Start Date"] || ""),
+                            endDate: formatExcelDate(row["تاريخ الانتهاء"] || row["End Date"] || ""),
                             grade: row["الدرجة"] || row["Grade"] || "",
                             certificateId: row["رقم الشهادة"] || row["Certificate ID"] || row["ID No"] || ""
                         });
